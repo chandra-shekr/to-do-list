@@ -1,0 +1,66 @@
+<%- include('header'); -%>
+
+
+    <div class="box" id="heading">
+
+        <% if(locals.title) {%>
+                <% title = title.replace(/,/g, "") %>
+                <h1><%= title.title() %></h1>
+        <% } %>
+    </div>
+
+    <div class="box">
+        <% todoList.forEach((item)=> {%>
+            <div class="item">
+                    <% item = item.charAt(0).toUpperCase() + item.substr(1).toLowerCase() %>
+                    <input type="checkbox" class="cross-out"/>
+                    <p>
+                        <%= item %>
+                    </p>
+                    <form method="POST" action="/update">
+                        <input type="hidden" class="update-item" name="item" value="" />
+                       <a  id="update-btn" style="display:none"><i class="fa-sharp fa-solid fa-check fa-sm"></i></a>
+                    </form> 
+                    <form id="delete-item" action="/delete-item" method="POST">
+                        <input type="hidden" name="deleteItem" value="<%= item %>"/>
+                        <input type="hidden" name="section" value="<%= siteSection %>"/>
+                        <img onclick="this.parentNode.submit()" class="delete-item" src="./images/delete.png"/>
+                    </form>
+            </div>
+            <% }); %>
+    </div>
+    <div class="box">
+        <form class="item" action="/add-item" method="POST">
+            <input type="text" name="inputTodo" placeholder="add item" required pattern="^[\w\s\W]+$" autocomplete="off"/>
+            <div id="include-item-submit">
+                <button type="submit" name="section" value="<%= siteSection %>"><strong>+</strong></button> 
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let p = document.querySelector(".item > p")
+        p
+        ?
+        p.addEventListener('click', ()=>{
+
+            p.setAttribute("contenteditable", "true")
+            document.querySelector("#update-btn").style.display = "inline-block"
+        })
+        :
+        null
+
+        let a = document.querySelector("#update-btn")
+        a
+        ?
+        a.addEventListener("click", ()=>{
+
+            let e = document.querySelector(".update-item")
+            let p = document.querySelector(".item > p")
+            e.setAttribute("value", p.innerHTML.trim())
+            a.parentNode.submit()
+        })
+        :
+        null
+    </script>
+<%- include('footer'); -%>

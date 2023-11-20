@@ -1,0 +1,153 @@
+html {
+  background-color: #e4e9fd;
+
+  /*
+
+    -webkit-linear-gradient: 
+
+          1. Very simple way of creating a gradient.
+          2. Specify the degree of your gradient.
+          3. Percentage of different colors.
+  */
+  background-image: -webkit-linear-gradient(
+    120deg,
+    #a683e3 25%,
+    #e4e9fd 35%,
+    red 45%,
+    white 65%,
+    azure 85%,
+    teal 100%
+  );
+  min-height: 1000px;
+  font-family: "Montserrat", sans-serif;
+}
+
+h1 {
+  color: #fff;
+  padding: 10px;
+}
+
+.box {
+  max-width: 400px;
+  margin: 50px auto;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+}
+
+#heading {
+  background-color: #a683e3;
+  text-align: center;
+}
+
+.item {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f1f1f1;
+  position: relative;
+}
+
+/*
+  .item:last-child: 
+
+      1. It's going to look at all the items inside a div.
+
+      2. Then it's going to target specifically the last child item.
+
+*/
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+/*
+    input:checked + p:  
+
+        1. Looks for an input that's in a checked state.
+
+        2. '+p'  selects all '<p>' elements that are placed immediately after <input> elements
+
+
+*/
+input:checked + p {
+  text-decoration: line-through;
+  text-decoration-color: #a683e3;
+}
+
+/*
+    input[type=checkbox]: 
+
+      1. Look at all the 'input' that has the attribute 'type=checkbox'
+
+      2. Apply the style to those elements.
+*/
+input[type="checkbox"] {
+  margin: 20px;
+}
+
+p {
+  margin: 0;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 200;
+  color: #00204a;
+}
+
+form {
+  text-align: center;
+  margin-left: 20px;
+}
+
+button {
+  min-height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border-color: transparent;
+  background-color: #a683e3;
+  color: #fff;
+  font-size: 30px;
+  padding-bottom: 6px;
+  border-width: 0;
+}
+
+input[type="text"] {
+  text-align: center;
+  height: 60px;
+  top: 10px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  font-weight: 200;
+  width: 313px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: inset 0 -3px 0 0 #a683e3;
+}
+
+/* To style form placeholder text */
+::placeholder {
+  color: grey;
+  opacity: 1;
+}
+
+footer {
+  color: white;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#update-btn:hover {
+  cursor: pointer;
+}
+
+.delete-item {
+  position: absolute;
+  right: 10%;
+}
+
+#delete-item :hover {
+  cursor: pointer;
+}
