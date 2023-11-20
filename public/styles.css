@@ -139,7 +139,7 @@ footer {
   text-align: center;
 }
 
-#update-btn:hover {
+.update-btn:hover {
   cursor: pointer;
 }
 

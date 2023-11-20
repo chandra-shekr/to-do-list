@@ -10,57 +10,73 @@
     </div>
 
     <div class="box">
-        <% todoList.forEach((item)=> {%>
-            <div class="item">
-                    <% item = item.charAt(0).toUpperCase() + item.substr(1).toLowerCase() %>
-                    <input type="checkbox" class="cross-out"/>
-                    <p>
-                        <%= item %>
-                    </p>
-                    <form method="POST" action="/update">
-                        <input type="hidden" class="update-item" name="item" value="" />
-                       <a  id="update-btn" style="display:none"><i class="fa-sharp fa-solid fa-check fa-sm"></i></a>
-                    </form> 
-                    <form id="delete-item" action="/delete-item" method="POST">
-                        <input type="hidden" name="deleteItem" value="<%= item %>"/>
-                        <input type="hidden" name="section" value="<%= siteSection %>"/>
-                        <img onclick="this.parentNode.submit()" class="delete-item" src="./images/delete.png"/>
-                    </form>
-            </div>
-            <% }); %>
+        <% if(locals.todoList) {%>
+            <% todoList.forEach((item)=> {%>
+                <div class="item">
+                        <% todo = item.todo.title() %>
+                        <input type="checkbox" class="cross-out"/>
+                        <p class="item-info">
+                            <%= todo %>
+                        </p>
+                        <form method="POST" action="/update">
+                            <input type="hidden" class="update-item" name="item" value="" />
+                            <input type="hidden" name="id" value="<%= item.id %>" />
+                        <a class="update-btn" style="display:none"><i class="fa-sharp fa-solid fa-check fa-sm"></i></a>
+                        </form> 
+                        <form id="delete-item" action="/delete-item" method="POST">
+                            <input type="hidden" name="item" value="<%= item.todo %>"/>
+                            <input type="hidden" name="id" value="<%= item.id %>"/>
+                            <img onclick="this.parentNode.submit()" class="delete-item" src="./images/delete.png"/>
+                        </form>
+                </div>
+                <% }); %>
+            <% } %>
     </div>
     <div class="box">
         <form class="item" action="/add-item" method="POST">
-            <input type="text" name="inputTodo" placeholder="add item" required pattern="^[\w\s\W]+$" autocomplete="off"/>
+            <input type="text" name="item" placeholder="add item" required pattern="^[\w\s\W]+$" autocomplete="off"/>
             <div id="include-item-submit">
-                <button type="submit" name="section" value="<%= siteSection %>"><strong>+</strong></button> 
+                <button type="submit"><strong>+</strong></button> 
             </div>
         </form>
     </div>
 
     <script>
-        let p = document.querySelector(".item > p")
+        let p = document.querySelectorAll(".item-info")
         p
         ?
-        p.addEventListener('click', ()=>{
+        p.forEach((e,idx) =>{
+            e.addEventListener('click', ()=>{
 
-            p.setAttribute("contenteditable", "true")
-            document.querySelector("#update-btn").style.display = "inline-block"
+            e.setAttribute("contenteditable", "true")
+            document.querySelectorAll(".update-btn")[idx].style.display = "inline-block"
+            })
         })
         :
         null
 
-        let a = document.querySelector("#update-btn")
+        let a = document.querySelectorAll(".update-btn")
         a
         ?
-        a.addEventListener("click", ()=>{
+        a.forEach((x,idx) =>{
+            x.addEventListener("click", ()=>{
 
-            let e = document.querySelector(".update-item")
-            let p = document.querySelector(".item > p")
+            let e = document.querySelectorAll(".update-item")[idx]
+            let p = document.querySelectorAll(".item-info")[idx]
             e.setAttribute("value", p.innerHTML.trim())
-            a.parentNode.submit()
+            x.parentNode.submit()
+            })
         })
         :
         null
+
+        function alterbox(err){
+            if(err){
+
+                alert(err)
+            }
+        }
+
+        alterbox("<%= locals.error %>")
     </script>
 <%- include('footer'); -%>
